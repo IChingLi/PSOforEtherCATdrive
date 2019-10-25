@@ -1,0 +1,9 @@
+﻿Build started 2019/8/7 上午 11:14:18.
+Project "C:\Users\Roxas\Desktop\newPso\newPso\newPso.vcxproj" on node 2 (rebuild target(s)).
+Project file contains ToolsVersion="15.0". This toolset may be unknown or missing, in which case you may be able to resolve this by installing the appropriate version of MSBuild, or the build may have been forced to a particular ToolsVersion for policy reasons. Treating the project as if it had ToolsVersion="4.0". For more information, please see http://go.microsoft.com/fwlink/?LinkId=291333.
+C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Platforms\x64\Microsoft.Cpp.x64.Targets(514,5): error MSB8008: Specified platform toolset (v141) is not installed or invalid. Please make sure that a supported PlatformToolset value is selected.
+Done Building Project "C:\Users\Roxas\Desktop\newPso\newPso\newPso.vcxproj" (rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.01
