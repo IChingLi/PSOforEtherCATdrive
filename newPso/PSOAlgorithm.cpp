@@ -6,8 +6,6 @@
 #include <vector>
 #include <ctime>
 #include "PSOAlgorithm.h"
-//#include "GantryControl.h"
-//#include "ErrorProcessing.h"
 
 //ICLi0821
 #include <iomanip>
@@ -24,15 +22,10 @@ float myRand() {
 
 // Objective function
 double PSO::sphere(float x[4]) {
-	// Testing objective function
+	// TESTING objective function
 	return sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2) + pow(x[3], 2)); //ICLi
-	//return PSO.ServoCost;
-	// Real objective function 
-	// homeCmd();
-	// runCmd(x[0], x[1], x[2]);
-
-	//return FixAverage(x);
 }
+
 //int PSO::sphere(){
 //	fstream finC;
 //	finC.open("Cost.csv", ios::in);
@@ -158,15 +151,12 @@ psoSol PSO::mainLoop() {
 		//getchar();
 	}
 
-	//closeCard();
-
 	return gBest;
 }
 
 // Constructor
 PSO::PSO(psoParam input) {
 	// Initialize Card
-	//initCard();
 
 	cont = 0;
 
@@ -198,7 +188,9 @@ PSO::PSO(psoParam input) {
 	Pn102Vmax = Vctrl * (Pn102max - Pn102min);
 	Pn401Vmax = Vctrl * (Pn401max - Pn401min);
 
-	/*PVmax = 10;
+	/*
+	// Test PSO algorithm
+	PVmax = 10;
 	IVmax = 10;
 	DVmax = 10;*/
 
@@ -208,31 +200,18 @@ PSO::PSO(psoParam input) {
 	Pn401Vmin = -Pn401Vmax;
 
 	gBest.Cost = 9999999999;
-	//gBest.Cost = input.ServoCost;
-	//gBest.Cost = input.InitCost;
+
 	cout << gBest.Cost << endl;
 	cout << "Creating intial population. # Particles to be initialized: " << nPop << endl;
 	for (int i = 0; i < nPop; i++) {
 		cout << "\tParticle: " << i << endl;
 		swarm.push_back(psoPart());
 		
-		
 		// Initialize position
 		swarm[i].Position[0] = Pn100min + myRand() * (Pn100max - Pn100min);
 		swarm[i].Position[1] = Pn101min + myRand() * (Pn101max - Pn101min);
 		swarm[i].Position[2] = Pn102min + myRand() * (Pn102max - Pn102min);
 		swarm[i].Position[3] = Pn401min + myRand() * (Pn401max - Pn401min);
-
-
-		
-		// Initialize position
-	/*	if(i == 0){
-			swarm[i].Position[0] = ServoGain[0];
-			swarm[i].Position[1] = ServoGain[1];
-			swarm[i].Position[2] = ServoGain[2];
-			swarm[i].Position[3] = ServoGain[3];
-		}*/
-
 		
 		//Initialize position
 		if(i == 0){
@@ -262,8 +241,9 @@ PSO::PSO(psoParam input) {
 		swarm[i].pBest.Position[3] = swarm[i].Position[3];
 
 		swarm[i].pBest.Cost = swarm[i].Cost;
-		//if(i == 0)//Roxas
-		//	swarm[i].pBest.Cost = input.InitCost;
+		if (i == 0) { //Roxas
+			swarm[i].pBest.Cost = input.InitCost;
+		}
 
 		// Update Global Best
 		if (swarm[i].pBest.Cost < gBest.Cost) {
@@ -326,10 +306,11 @@ psoSol PSO::run() {
 // Save important data from PSO
 int PSO::saveData(string filenameBest, string filenameData, string filenameTheBest) {
 	ofstream fileBest, fileData, fileTheBest;
+
+	// Save best solutions EVOLUTION
 	fileBest.open(filenameBest);
 	fileBest << "Pn100,Pn101,Pn102,Pn401,Cost,\n";
 	int lim = bSol.size();
-
 
 	for (int i = 0; i < lim; i++) {
 		fileBest << bSol[i].Position[0] << "," << bSol[i].Position[1] 
@@ -337,6 +318,8 @@ int PSO::saveData(string filenameBest, string filenameData, string filenameTheBe
 	}
 
 	fileBest.close();
+
+	// Save best solution
 	fileTheBest.open(filenameTheBest);//Roxas
 	/*fileTheBest<< (int)bSol[lim-1].Position[0] << "," << (int)bSol[lim-1].Position[1] 
 		<< "," << (int)bSol[lim-1].Position[2] << "," << (int)bSol[lim-1].Position[3]<<endl;*/
@@ -344,6 +327,7 @@ int PSO::saveData(string filenameBest, string filenameData, string filenameTheBe
 		<< "," << (int)gBest.Position[2] << "," << (int)gBest.Position[3] << "," << (int)gBest.Cost <<endl;
 	fileTheBest.close();
 
+	// Save PSO data
 	fileData.open(filenameData);
 	fileData << "it,par,PosPn100,PosPn101,PosPn102,PsoPn401,Cost,VelPn100,VelPn101,VelPn102,VelPn401,PBPosPn100,PBPosPn101,PBPosPn102,PBPosPn401,PBCost,GBPosPn100,GBPosPn101,GBPosPn102,GBPosPn401,GPCost,\n"; //ICLi
 
