@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 using namespace std;
 
 #define RECORD_MAX 1500
@@ -42,7 +40,7 @@ class PSO {
 		float w, wdamp, c1, c2;
 		float Pn100max, Pn100min, Pn101max, Pn101min, Pn102max, Pn102min, Pn401max, Pn401min;
 		float Pn100Vmax, Pn100Vmin, Pn101Vmax, Pn101Vmin, Pn102Vmax, Pn102Vmin, Pn401Vmax, Pn401Vmin;
-		vector<psoSol> bSol;
+		psoSol *bSol;
 		double PSOData[21][RECORD_MAX]; //PSOData 17->21
 		int ServoGain[4]; //Pn100,Pn101,Pn102,Pn401
 		int ServoCost;
@@ -54,20 +52,19 @@ class PSO {
 			psoSol pBest;
 		};
 
-		vector<psoPart> swarm;
+		psoPart *swarm;
 		psoSol gBest;
 
-	///Fucntions
+	///Functions
 		double sphere(float x[4]); //4 parameters for servo drive
 		psoSol mainLoop();
-		//void readData(string filenameGain, string filenameCost); //ICLi
+		void readData(string filenameGain, string filenameCost); //ICLi
 
 	public:
 	///Functions
 		PSO(psoParam input);
 		~PSO();
 		psoSol run();
-		//int sphere();
 		int saveData(string filenameBest, string filenameData, string filnemaTheBest);//Roxas
 		//void PreadData(string filenameTheBest, string filenameCost); //ICLi
 };

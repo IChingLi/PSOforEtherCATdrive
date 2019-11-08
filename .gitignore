@@ -36,3 +36,10 @@
 *.opendb
 *.db
 *.suo
+
+*.csv
+*.tlog
+*.idb
+*.pdb
+*.ilk
+*.applocal.log

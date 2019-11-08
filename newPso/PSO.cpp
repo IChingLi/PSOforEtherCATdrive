@@ -35,9 +35,11 @@ void ReadData(string filenameTheBest, string filenameCost) {
 		cout << "開啟檔案失敗！" << endl;
 		exit(1);
 	}
+
 	int i = 0;
 	string line;
 	string field;
+
 	while (getline(finG, line)) //getline(inFile, line)表示按行讀取CSV檔案中的資料
 	{
 		string field;
@@ -99,24 +101,23 @@ int main()
 	input.InitCost = servogain[4];
 	
 	// PSO parameters
-	input.Pn100min = 10;
-	input.Pn101min = 15;
-	input.Pn102min = 10;
-	input.Pn401min = 0;
+	input.Pn100min = -10;
+	input.Pn101min = -10;
+	input.Pn102min = -10;
+	input.Pn401min = -10;
 
-	input.Pn100max = 20000;
-	input.Pn101max = 51200;
-	input.Pn102max = 20000;
-	input.Pn401max = 65535;
+	input.Pn100max = 10;
+	input.Pn101max = 10;
+	input.Pn102max = 10;
+	input.Pn401max = 10;
 
-	input.MaxIt =1;
+	input.MaxIt =10;
 	input.nPop = 20;
 
 	PSO pso(input);
 	//pso.PreadData(filenameTheBest, filenameCost); //ICLi
 	output = pso.run();
-	pso.saveData(fileBest, fileData, filenameTheBest);
-
+	//pso.saveData(fileBest, fileData, filenameTheBest);
 
 	cout << "Routine finished..." << endl;
 	system("PAUSE");
